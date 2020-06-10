@@ -5,4 +5,4 @@ class Foo:
 
 class Bar:
     def bar(self):
-        print("Beer")
+        print("Bar")
