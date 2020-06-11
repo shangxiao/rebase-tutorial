@@ -100,28 +100,8 @@ Here we can see that the commit message "Add Bazz" is incorrect - the commit act
 
 ```
 root ~/rebase-tutorial (rebase-me)# git log -p
-commit 474ed16f4158566d557550b037319f2e55b68a06 (HEAD -> rebase-me)
-Author: David Sanders <>
-Date:   Wed Jun 10 14:58:50 2020 +1000
 
-    Fix Bar
-
-diff --git a/foo.py b/foo.py
-index 7ce7703..00c3aeb 100644
---- a/foo.py
-+++ b/foo.py
-@@ -5,4 +5,4 @@ class Foo:
-
- class Bar:
-     def bar(self):
--        print("Beer")
-+        print("Bar")
-
-commit a6c01d256a7de61559a786a0bca46371fcb5fcfe
-Author: David Sanders <>
-Date:   Wed Jun 10 17:13:01 2020 +1000
-
-    Delete me!
+...
 
 commit 8af7b5ec7a2479158897ca4fec10941e77e3d94d
 Author: David Sanders <>
@@ -142,7 +122,46 @@ index 0000000..c04d24d
 ...
 ```
 
-We can fix this commit message with an interactive rebase. This will give 
+We can fix this commit message with an interactive rebase. This command presents us with a "todo list" which we need to edit in order to tell git how to edit the commits:
+
+```
+root ~/rebase-tutorial (rebase-me)# git rebase -i master
+hint: Waiting for your editor to close the file...
+
+...
+
+pick 2c1d7aa Add Foo and Bar
+pick 8af7b5e Add Bazz <-- This message is incorrect :(
+pick a6c01d2 Delete me! # empty
+pick 474ed16 Fix Bar
+
+# Rebase d272513..474ed16 onto 474ed16 (4 commands)
+#
+# Commands:
+# p, pick <commit> = use commit
+# r, reword <commit> = use commit, but edit the commit message
+# e, edit <commit> = use commit, but stop for amending
+# s, squash <commit> = use commit, but meld into previous commit
+# f, fixup <commit> = like "squash", but discard this commit's log message
+# x, exec <command> = run command (the rest of the line) using shell
+# b, break = stop here (continue rebase later with 'git rebase --continue')
+# d, drop <commit> = remove commit
+# l, label <label> = label current HEAD with a name
+# t, reset <label> = reset HEAD to a label
+# m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+# .       create a merge commit using the original merge commit's
+# .       message (or the oneline, if no original merge commit was
+# .       specified). Use -c <commit> to reword the commit message.
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# Do not remove any line. Use 'drop' explicitly to remove a commit.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+```
+
+The editor shows 
 
 
 2. Demonstrate basic rebasing (non-interactive):
