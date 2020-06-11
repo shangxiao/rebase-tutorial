@@ -96,6 +96,8 @@ root ~/rebase-tutorial (rebase-me)# git log --graph --all --oneline
 
 ### The second part of rebasing: Interactive rebasing to edit manipulate commits
 
+#### Correct commit messages
+
 Here we can see that the commit message "Add Bazz" is incorrect - the commit actually adds a class called `Buzz`:
 
 ```
@@ -161,7 +163,56 @@ pick 474ed16 Fix Bar
 #
 ```
 
-The editor shows 
+The editor presents us with a list of the commits that we can edit along with the commands to be issue per commit. To edit the message for the "Add Bazz" commit we'll need to issue the `reword` command for it (or just `r` for short):
+
+```
+pick 2c1d7aa Add Foo and Bar
+r 8af7b5e Add Bazz <-- This message is incorrect :(
+pick a6c01d2 Delete me! # empty
+pick 474ed16 Fix Bar
+```
+
+Edit the commit message:
+
+```
+Add Buzz
+```
+
+and our result:
+
+```
+[detached HEAD 3751fcb] Add Buzz
+ Author: David Sanders <>
+ Date: Wed Jun 10 14:58:11 2020 +1000
+ 1 file changed, 3 insertions(+)
+ create mode 100644 buzz.py
+Successfully rebased and updated refs/heads/rebase-me.
+root ~/rebase-tutorial (rebase-me)# git log --oneline
+33ed2ec (HEAD -> rebase-me) Fix Bar
+603b572 Delete me!
+3751fcb Add Buzz
+2c1d7aa Add Foo and Bar
+d272513 (origin/master, origin/HEAD, master) Add some instructions
+7f592d2 Initial commit
+```
+
+#### Delete unwanted commits
+
+The "Delete me!" commit is an empty commit… let's get rid of it as it's not required and just adds noise to the commit history:
+
+```
+root ~/rebase-tutorial (rebase-me)# git log -p
+
+...
+
+commit 603b572decdb55d1a81cb0f70075515ef009a528
+Author: David Sanders <>
+Date:   Wed Jun 10 17:13:01 2020 +1000
+
+    Delete me!
+
+...
+
 
 
 2. Demonstrate basic rebasing (non-interactive):
